@@ -33,7 +33,15 @@ router.get('/', function(req, res, next) {
       image:"https://images-na.ssl-images-amazon.com/images/I/71i2XhHU3pL._SL1500_.jpg"
     }
   ]
-  res.render('index', { products,admin:true });
+  res.render('admin/view-products', { products,admin:true });
 });
+router.get('/add-product',(req,res)=>{
+  res.render('admin/add-product')
+})
+router.post('/add-product',(req,res)=>{
+  console.log(req.body);
+  console.log(req.files.image);
+
+})
 
 module.exports = router;
