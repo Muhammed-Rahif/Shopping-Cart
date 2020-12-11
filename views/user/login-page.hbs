@@ -3,20 +3,20 @@
         <h2 class="text-center">Login page</h2>
         {{#if loginErr}}
         <div class="col-md-12">
-            <p class="text-center">{{loginErr}}</p>
+            <p class="text-center text-danger">{{loginErr}}</p>
         </div>
         {{/if}}
-            <form action="/login" method="post">
-                <div class="form-group">
-                    <label for="">Email address</label>
-                    <input type="email" class="form-control" name="email" placeholder="Enter your email...">
-                </div>
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="Password here...">
-                </div>
-                <a href="/signup">Create new account ?</a>
-                <button type="submit" class="btn btn-primary float-right">Login</button>
-            </form>
-    </div> 
+        <form action="/login" method="post">
+            <div class="form-group">
+                <label for="">Email address</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter your email...">
+            </div>
+            <div class="form-group">
+                <label for="">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Password here...">
+            </div>
+            <a href="/signup">Create new account ?</a>
+            <button type="submit" class="btn btn-primary float-right">Login</button>
+        </form>
+    </div>
 </section>

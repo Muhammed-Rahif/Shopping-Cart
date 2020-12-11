@@ -22,7 +22,7 @@
                     <td>{{this.discription}}</td>
                     <td>Rs: {{this.price}}</td>
                     <td><img style="width: 100px;height: auto;" src="/product-images/{{this._id}}.jpg"></td>
-                    <td><a href="/admin/edit-product" class="btn btn-primary m-1">Edit</a><a href="/admin/delete-product/{{this._id}}" class="btn btn-danger m-1" onclick="return confirm('Are you sure to delete {{this.name}}')">Delete</a></td>
+                    <td><a href="/admin/edit-product/{{this._id}}" class="btn btn-primary m-1">Edit</a><a href="/admin/delete-product/{{this._id}}" class="btn btn-danger m-1" onclick="return confirm('Are you sure to delete {{this.name}}')">Delete</a></td>
                 </tr>
                 {{/each}}
             </tbody>
