@@ -9,7 +9,7 @@
                     <p class="card-text">{{this.discription}}</p>
                     <hr>
                     <p><small>Rs: {{this.price}}</small></p>
-                    <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add to Cart</a>
+                    <button class="btn btn-primary" onclick="addToCart('{{this._id}}')">Add to Cart</button>
                 </div>
             </div>
         </div>
