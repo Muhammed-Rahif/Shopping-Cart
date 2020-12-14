@@ -49,7 +49,7 @@
             <hr>
         </div>
         <div class="col-md-7">
-            <form action="" method="POST" class="g-3 needs-validation" novalidate>
+            <form id="checkout-form" action="" class="g-3 needs-validation" novalidate>
 
                 <div class="form-group position-relative">
                     <label for="" class="form-label">Address</label>
@@ -101,6 +101,7 @@
                         name="payment-method" required />
                     <label class="form-check-label" for="">Online payment</label>
                 </div>
+                <input type="text" name="userId" value="{{user._id}}" hidden>
                 <div class="row p-1 pr-3">
                     <button class="btn btn-primary ml-auto" type="submit">Checkout</button>
                 </div>
@@ -110,6 +111,22 @@
     </div>
 </div>
 
+<script>
+    $("#checkout-form").submit((e)=>{
+        e.preventDefault()
+        $.ajax({
+            url:'/place-order',
+            method:'post',
+            data:$('#checkout-form').serialize(),
+            success:(response)=>{
+                if(response.status){
+                    alert("Order placed sussecfully")
+                    location.href='/order-placed'
+                }
+            }
+        })
+    })
+</script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
