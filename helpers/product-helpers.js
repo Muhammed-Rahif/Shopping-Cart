@@ -1,6 +1,7 @@
 var db = require('../config/connection')
 var collection = require('../config/collections')
 var objectId = require('mongodb').ObjectID
+var Promise = require('promise');
 module.exports = {
     addProduct: (product) => {
         product.price = parseInt(product.price)

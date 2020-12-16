@@ -60,11 +60,13 @@ router.get('/logout', (req, res) => {
 })
 router.get('/cart', verifyLogin, async (req, res) => {
   let user = req.session.user
-  let totalValue = await userHelpers.getTotalAmount(req.session.user._id)
+  let products=await userHelpers.getCartProducts(req.session.user._id)
+  let totalValue=0;
+  if (products.length>0) {
+     totalValue = await userHelpers.getTotalAmount(req.session.user._id)
+  }
   console.log(totalValue);
-  userHelpers.getCartProducts(req.session.user._id).then((products) => {
-    res.render('user/cart', { user, products, totalValue })
-  })
+  res.render('user/cart', { user, products, totalValue })
 })
 router.get('/add-to-cart/:id', (req, res) => {
   userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
@@ -91,8 +93,14 @@ router.get('/place-order', verifyLogin, async (req, res) => {
 router.post('/place-order', async (req, res) => {
   let products = await userHelpers.getCartProductList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  userHelpers.placeOrder(req.body, products, totalPrice).then((response) => {
-    res.json({ status: true })
+  userHelpers.placeOrder(req.body, products, totalPrice).then((orderId) => {
+    if(req.body['payment-method']==='COD'){
+      res.json({ codsuccess: true })
+    }else{
+      userHelpers.generateRazorpay(orderId,totalPrice).then((response)=>{
+        res.json(response)
+      })
+    }
   })
 })
 router.get('/order-placed', verifyLogin, (req, res) => {
@@ -109,6 +117,18 @@ router.get('/view-order-products/:id', verifyLogin, async (req, res) => {
   console.log(products);
   let user = req.session.user
   res.render('user/view-order-products', { user, products })
+})
+router.post('/payment-verify',(req,res)=>{
+  console.log(req.body);
+  userHelpers.verifyPayment(req.body).then(()=>{
+    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(()=>{
+      console.log("Payment successfull");
+      res.json({status:true})
+    })
+  }).catch((err)=>{
+    console.log(err);
+    res.json({status:false,errMsg:''})
+  })
 })
 
 

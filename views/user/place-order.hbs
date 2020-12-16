@@ -1,46 +1,4 @@
-{{!-- <section class="container mt-5 mb-5">
-    <div>
-        <h2 class="text-center">Enter Delivery Details</h2>
-    </div>
-    <form action="" method="post">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="">Address</label>
-                <input type="text" class="form-control" name="address" placeholder="Enter your address...">
-            </div>
-            <div class="form-group">
-                <label for="">Pincode</label>
-                <input type="number" class="form-control" name="pincode" placeholder="Pincode here...">
-            </div>
-            <div class="form-group">
-                <label for="">Mobile</label>
-                <input type="tel" class="form-control" name="mobile" placeholder="Enter your mobile number...">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-control">
-                <h5>Total Amount : Rs. 12600</h5>
-                <hr>
-                <label for="">payment method</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radio" value="COD" checked>
-                    <label class="form-check-label" for="">
-                        Cash on delivery
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radio" value="onlinePayment">
-                    <label class="form-check-label" for="">
-                        Online Payment
-                    </label>
-                    <div class="ml-auto m-3">
-                        <button class="btn btn-primary" type="submit">Checkout</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</section> --}}
+
 
 <div class="container">
     <div class="row">
@@ -112,20 +70,72 @@
 </div>
 
 <script>
-    $("#checkout-form").submit((e)=>{
+    $("#checkout-form").submit((e) => {
         e.preventDefault()
         $.ajax({
-            url:'/place-order',
-            method:'post',
-            data:$('#checkout-form').serialize(),
-            success:(response)=>{
-                if(response.status){
+            url: '/place-order',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                if (response.codsuccess) {
                     alert("Order placed sussecfully")
-                    location.href='/order-placed'
+                    location.href = '/order-placed'
+                } else {
+                    razorpayPayment(response)
                 }
             }
         })
     })
+
+
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_31oUMeBliHlPZQ", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Muhammed Rahif",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+
+                verifyPayment(response,order)
+
+            },
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function verifyPayment(payment,order){
+        $.ajax({
+            url:'/payment-verify',
+            data:{
+                payment,
+                order
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.status){
+                    alert("Order placed sussecfully")
+                    location.href = '/order-placed'
+                }else{
+                    alert("Payment failed")
+                }
+            }
+        })
+    }
 </script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
