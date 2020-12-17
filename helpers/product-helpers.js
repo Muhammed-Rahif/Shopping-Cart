@@ -2,6 +2,7 @@ var db = require('../config/connection')
 var collection = require('../config/collections')
 var objectId = require('mongodb').ObjectID
 var Promise = require('promise');
+const { reject } = require('promise');
 module.exports = {
     addProduct: (product) => {
         product.price = parseInt(product.price)
@@ -47,6 +48,38 @@ module.exports = {
             }).then((response)=>{
                 resolve()
             })
+        })
+    },
+    doLogin:(adminData)=>{
+        return new Promise(async(resolve,reject)=>{
+            const defAdmin={
+                name:"Muhammed Rahif",
+                email:'rahifpalliyalil@gmail.com',
+                password:'1234'
+            }
+            let adminDataExist=await db.get().collection(collection.ADMIN_COLLECTION).findOne({})
+            if (adminDataExist) {
+                if (adminData.email===adminDataExist.email) {
+                    if (adminData.password===adminDataExist.password) {
+                        resolve({loginStatus:true,admin:defAdmin})
+                    } else {
+                        resolve({loginStatus:false})
+                    }
+                } else {
+                    resolve({loginStatus:false})
+                }
+            } else {
+                db.get().collection(collection.ADMIN_COLLECTION).insertOne(defAdmin)
+                if (adminData.email===adminDataExist.email) {
+                    if (adminData.password===adminDataExist.password) {
+                        resolve({loginStatus:true})
+                    } else {
+                        resolve({loginStatus:false})
+                    }
+                } else {
+                    resolve({loginStatus:false})
+                }
+            }
         })
     }
 }

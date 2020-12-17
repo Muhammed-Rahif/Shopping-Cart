@@ -4,7 +4,7 @@ var router = express.Router();
 var productHelpers = require('../helpers/product-helpers')
 var userHelpers = require('../helpers/user-helpers')
 const verifyLogin = (req, res, next) => {
-  if (req.session.loggedIn) {
+  if (req.session.userLoggedIn) {
     next()
   } else {
     res.redirect('/login')
@@ -25,11 +25,11 @@ router.get('/', async function (req, res, next) {
   })
 });
 router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.user) {
     res.redirect('/')
   } else {
-    res.render('user/login-page', { "loginErr": req.session.loginErr })
-    req.session.loginErr = false
+    res.render('user/login-page', { "loginErr": req.session.userLoginErr })
+    req.session.userLoginErr = false
   }
 })
 router.get('/signup', (req, res) => {
@@ -37,7 +37,7 @@ router.get('/signup', (req, res) => {
 })
 router.post('/signup', (req, res) => {
   userHelpers.doSignup(req.body).then((data) => {
-    req.session.loggedIn = true
+    req.session.user.loggedIn = true
     req.session.user = data
     res.redirect('/')
   })
@@ -45,27 +45,28 @@ router.post('/signup', (req, res) => {
 router.post('/login', (req, res) => {
   userHelpers.doLogin(req.body).then((response) => {
     if (response.status) {
-      req.session.loggedIn = true
       req.session.user = response.user
+      req.session.user.loggedIn = true
       res.redirect('/')
     } else {
-      req.session.loginErr = "Invalid email or password"
+      req.session.userLoginErr = "Invalid email or password"
       res.redirect('/login')
     }
   })
 })
 router.get('/logout', (req, res) => {
-  req.session.destroy()
+  req.session.user=null
+  req.session.userLoggedIn=false
   res.redirect('/')
 })
 router.get('/cart', verifyLogin, async (req, res) => {
   let user = req.session.user
   let products=await userHelpers.getCartProducts(req.session.user._id)
   let totalValue=0;
+  console.log(products.length);
   if (products.length>0) {
      totalValue = await userHelpers.getTotalAmount(req.session.user._id)
   }
-  console.log(totalValue);
   res.render('user/cart', { user, products, totalValue })
 })
 router.get('/add-to-cart/:id', (req, res) => {

@@ -1,9 +1,9 @@
-<section class="container mt-5">
+<section class="container  mt-5 mb-5">
     <div class="row">
-        <a class="btn btn-success ml-auto mb-5" href="/admin/add-product">Add Product</a>
+        <a class="btn btn-success ml-auto mb-3" href="/admin/add-product">Add Product</a>
     </div>
     <div class="row">
-        <table class="table table-bordered">
+        <table id="productsTable" class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
@@ -24,7 +24,7 @@
                     <td><img style="width: 100px;height: auto;" src="/product-images/{{this._id}}.jpg"></td>
                     <td>
                         <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary m-1">Edit</a>
-                        
+
                         <a href="/admin/delete-product/{{this._id}}" class="btn btn-danger m-1"
                             onclick="return confirm('Are you sure to delete {{this.name}}')">Delete</a>
                     </td>
@@ -34,3 +34,8 @@
         </table>
     </div>
 </section>
+<script>
+    $(document).ready(function () {
+        $('#productsTable').DataTable();
+    });
+</script>
