@@ -2,7 +2,7 @@ var db = require('../config/connection')
 var collection = require('../config/collections')
 var objectId = require('mongodb').ObjectID
 var Promise = require('promise');
-const { reject } = require('promise');
+const { reject, resolve } = require('promise');
 module.exports = {
     addProduct: (product) => {
         product.price = parseInt(product.price)
@@ -80,6 +80,38 @@ module.exports = {
                     resolve({loginStatus:false})
                 }
             }
+        })
+    },
+    getAllOrders:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let orders=await db.get().collection(collection.ORDER_COLLECTION).find({}).toArray()
+            resolve(orders)
+        })
+    },
+    changeOrderStatus:(orderId,orderStatus)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
+            {
+                $set:{
+                    status:orderStatus
+                }
+            }
+            ).then((response)=>{
+                resolve(orderStatus)
+            })
+            
+        })
+    },
+    getAllUsers:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let users=await db.get().collection(collection.USER_COLLECTION).find({}).toArray()
+            resolve(users)
+        })
+    },
+    getUserOrders:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let userOrders=await db.get().collection(collection.ORDER_COLLECTION).find({userId:objectId(userId)}).toArray()
+            resolve(userOrders)
         })
     }
 }

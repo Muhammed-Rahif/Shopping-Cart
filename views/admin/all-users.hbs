@@ -1,0 +1,22 @@
+<section class="container mt-5">
+    <div class="row">
+        <table class="table col-md-12 table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                <tr>
+                    <th>{{this.name}}</th>
+                    <td>{{this.email}}</td>
+                    <td><a href="/admin/view-user-orders/{{this._id}}" class="btn btn-primary">View orders</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>

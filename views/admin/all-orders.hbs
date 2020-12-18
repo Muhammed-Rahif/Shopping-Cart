@@ -1,0 +1,60 @@
+<section class="container mt-5">
+    <div class="row">
+        <table class="table col-md-12 table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Address</th>
+                    <th>Pincode</th>
+                    <th>Mobile</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Change status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr>
+                    <th>{{this.date}}</th>
+                    <td>{{this.deliveryDetails.address}}</td>
+                    <td>{{this.deliveryDetails.pincode}}</td>
+                    <td>{{this.deliveryDetails.mobile}}</td>
+                    <td>{{this.totalAmount}}</td>
+                    <td>{{this.paymentMethod}}</td>
+                    <td id="status-{{this._id}}">{{this.status}}</td>
+                    <td>
+                        <select onchange="changeStatusOption('{{this._id}}')" id="{{this._id}}" class="form-control" style="width: auto;">
+                            <option selected disabled>Change status</option>
+                            <option value="placed">Placed</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="canceled">Canceled</option>
+                            <option value="out of stock">Out of stock</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </td>
+
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script>
+    function changeStatusOption(id){
+        let value=document.getElementById(id).value
+        $.ajax({
+            url:'/admin/change-order-status',
+            data:{
+                orderId:id,
+                orderStatus:value
+            },
+            method:'post',
+            success:(response)=>{
+                alert("Order status changed to : "+response.orderStatus)
+                document.getElementById("status-"+id).innerHTML=response.orderStatus
+            }
+
+        })
+    }
+</script>
