@@ -47,7 +47,7 @@ Now open your web browser and go to "localhost:3000".
 
 * **Muhammed Rahif** - *Developed* - [Muhammed-Rahif](https://github.com/Muhammed-Rahif)
 
-## Helped by
+### Helped by
 
 * [Crossroads team](https://crossroads.world/)
 
