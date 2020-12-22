@@ -39,9 +39,11 @@ Now open your web browser and go to "localhost:3000".
 
 * [Node js](https://nodejs.org/) - JavaScript runtime environment
 * [Mongodb](https://www.mongodb.com/) - Database used in this project
-* [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) - Used to design UI
+* [Handlebars](https://handlebarsjs.com/) - HTML Templating language.
 * [Razorpay](https://razorpay.com/) - Payment gateway used in this project 
-* [Handlebars](https://handlebarsjs.com/) - HTML Templating language. 
+* [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) - Used to design UI
+
+
 
 
 ## Authors
