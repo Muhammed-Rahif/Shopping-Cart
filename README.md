@@ -3,7 +3,7 @@
 This is a sample project built by Nodejs and Mongodb.
 
 ## Getting Started
-This is shopping cart sample project using nodejs, mongodb, bootstrap, and razorpay... 
+This is shopping cart sample project using nodejs, mongodb, handlebars, bootstrap, and razorpay... 
 
 
 ### Prerequisites
@@ -41,6 +41,7 @@ Now open your web browser and go to "localhost:3000".
 * [Mongodb](https://www.mongodb.com/) - Database used in this project
 * [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) - Used to design UI
 * [Razorpay](https://razorpay.com/) - Payment gateway used in this project 
+* [Handlebars](https://handlebarsjs.com/) - HTML Templating language. 
 
 
 ## Authors
