@@ -9,6 +9,7 @@ var instance = new Razorpay({
     key_id: 'rzp_test_31oUMeBliHlPZQ',
     key_secret: 'oRVqJAQuObz6rQycSfQhrnnh',
 });
+const moment = require('moment')
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -213,11 +214,12 @@ module.exports = {
                     pincode: order.pincode
                 },
                 userId: objectId(order.userId),
+                userName:order.userName,
                 paymentMethod: order['payment-method'],
                 products: products,
                 totalAmount: total,
                 status: status,
-                date: new Date()
+                date: moment().format('llll')
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {

@@ -4,6 +4,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Date</th>
+                    <th>User name</th>
                     <th>Address</th>
                     <th>Pincode</th>
                     <th>Mobile</th>
@@ -17,6 +18,7 @@
                 {{#each orders}}
                 <tr>
                     <th>{{this.date}}</th>
+                    <td>{{this.userName}}</td>
                     <td>{{this.deliveryDetails.address}}</td>
                     <td>{{this.deliveryDetails.pincode}}</td>
                     <td>{{this.deliveryDetails.mobile}}</td>
