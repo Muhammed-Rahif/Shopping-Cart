@@ -52,11 +52,11 @@ Now open your web browser and go to "localhost:3000".
 
 ### Helped by
 
-* [Crossroads team](https://crossroads.world/)
+* [Crossroads Team](https://crossroads.world/)
 
 * [Nikhil Kilivayil](https://github.com/nikhilkilivayil)
 
 * [Sonu Gopal](https://github.com/sonugopal)
 
-* [Crossroads youtube](https://www.youtube.com/channel/UCoGHeFY7jE2OB_TJS_87MOA)
+* [Crossroads Youtube](https://www.youtube.com/channel/UCoGHeFY7jE2OB_TJS_87MOA)
 
