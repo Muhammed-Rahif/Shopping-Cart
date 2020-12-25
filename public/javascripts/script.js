@@ -17,3 +17,12 @@ function addToCart(proId,userId) {
         window.location.href = '/login';
     }
 }
+function showShadow(){
+    if (window.pageYOffset>0) {
+        document.getElementById('nav-header').classList.add('down-shadow')
+    } else {
+        document.getElementById('nav-header').classList.remove('down-shadow')
+    }
+}
+
+  AOS.init();

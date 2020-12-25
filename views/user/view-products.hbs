@@ -1,8 +1,8 @@
-<section class="container mt-5 mb-5">
+<section class="container cards mt-5 mb-5">
     <div class="row">
         {{#each products}}
         <div class="col-md-3 mt-3 mb-3">
-            <div class="card" style="width: auto;">
+            <div data-aos="fade-right" class="card" style="width: auto;">
                 <img class="card-img-top" src="product-images/{{this._id}}.jpg" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{this.name}}</h5>
