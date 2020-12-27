@@ -99,7 +99,6 @@ router.get('/view-user-orders/:id',verifyLogin,async(req,res)=>{
   let admin=req.session.admin;
   console.log(req.params.id);
   let userOrders=await productHelpers.getUserOrders(req.params.id)
-  console.log("%%% ",userOrders);
   res.render('admin/user-orders',{admin,userOrders})
 })
 
