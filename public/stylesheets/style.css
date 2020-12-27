@@ -1,13 +1,13 @@
 .cards .card{
+    box-shadow: 0px 0px 2px black;
     transition: 0.4s;
-    box-shadow: 5px 5px 10px grey;
 }
 .cards .card:hover{
+    box-shadow: 5px 5px 10px black;
     transition: 0.4s;
-    box-shadow: 0px 0px 2px grey;
 }
 .down-shadow{
-    box-shadow: 0px 5px 20px grey ;
+    box-shadow: 0px 5px 20px black ;
 }
 #nav-header{
     transition: 0.4s;

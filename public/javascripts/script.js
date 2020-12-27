@@ -25,4 +25,4 @@ function showShadow(){
     }
 }
 
-  AOS.init();
+ScrollReveal().reveal('.card',{reset:true,interval: 16});
