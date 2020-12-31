@@ -1,5 +1,6 @@
 <section class="container cards mt-5 mb-5">
     <div class="row">
+        {{#if products}}
         {{#each products}}
         <div class="col-md-3 mt-3 mb-3">
             <div data-aos="fade-down" class="card" style="width: auto;">
@@ -9,10 +10,19 @@
                     <p class="card-text">{{this.discription}}</p>
                     <hr>
                     <p><small>Rs: {{this.price}}</small></p>
-                    <button class="btn btn-primary" onclick="addToCart('{{this._id}}','{{../user._id}}')">Add to Cart</button>
+                    <button class="btn btn-primary" onclick="addToCart('{{this._id}}','{{../user._id}}')">Add to
+                        Cart</button>
                 </div>
             </div>
         </div>
         {{/each}}
+        {{else}}
+        <div class="col-md-12">
+            <div data-aos="fade-down" class="card" style="width: auto;">
+                <h2 class="text-center text-danger">No Products for Sell.!</h2>
+                <p class="text-warning text-center">This may be server issues..! Wait until restart..!</p>
+            </div>
+        </div>
+        {{/if}}
     </div>
 </section>

@@ -17,6 +17,7 @@ router.get('/',verifyLogin, function (req, res, next) {
   })
 });
 router.get('/add-product',verifyLogin, (req, res) => {
+  let admin=req.session.admin
   res.render('admin/add-product', { admin })
 })
 router.post('/add-product', (req, res) => {
@@ -24,6 +25,7 @@ router.post('/add-product', (req, res) => {
     let image = req.files.image
     image.mv('./public/product-images/' + id + '.jpg', (err, done) => {
       if (!err) {
+        let admin=req.session.admin
         res.render('admin/add-product', { admin })
       } else {
         console.log(err);
