@@ -3,6 +3,7 @@ var collection = require('../config/collections')
 var objectId = require('mongodb').ObjectID
 var Promise = require('promise');
 const { reject, resolve } = require('promise');
+const collections = require('../config/collections');
 module.exports = {
     addProduct: (product) => {
         product.price = parseInt(product.price)
@@ -70,8 +71,8 @@ module.exports = {
                 }
             } else {
                 db.get().collection(collection.ADMIN_COLLECTION).insertOne(defAdmin)
-                if (adminData.email===adminDataExist.email) {
-                    if (adminData.password===adminDataExist.password) {
+                if (adminData.email===defAdmin.email) {
+                    if (adminData.password===defAdmin.password) {
                         resolve({loginStatus:true})
                     } else {
                         resolve({loginStatus:false})
@@ -112,6 +113,12 @@ module.exports = {
         return new Promise(async(resolve,reject)=>{
             let userOrders=await db.get().collection(collection.ORDER_COLLECTION).find({userId:objectId(userId)}).toArray()
             resolve(userOrders)
+        })
+    },
+    getUserData:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let userData=await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)})
+            resolve(userData);
         })
     }
 }

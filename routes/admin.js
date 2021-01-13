@@ -99,9 +99,9 @@ router.get('/all-users',verifyLogin,async(req,res)=>{
 })
 router.get('/view-user-orders/:id',verifyLogin,async(req,res)=>{
   let admin=req.session.admin;
-  console.log(req.params.id);
   let userOrders=await productHelpers.getUserOrders(req.params.id)
-  res.render('admin/user-orders',{admin,userOrders})
+  let userData=await productHelpers.getUserData(req.params.id)
+  res.render('admin/user-orders',{admin,userOrders,userData})
 })
 
 
