@@ -13,10 +13,16 @@ const moment = require('moment')
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
-            userData.password = await bcrypt.hash(userData.password, 10)
-            db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((data) => {
-                resolve(data.ops[0])
-            })
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
+            if (user) {
+                resolve({response:false})
+            } else {
+                userData.password = await bcrypt.hash(userData.password, 10)
+                db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((data) => {
+                    data=data.ops[0];
+                    resolve({data,response:true})
+                })
+            }
         })
     },
     doLogin: (userData) => {
