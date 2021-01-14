@@ -4,13 +4,13 @@
             <h2 class="text-center">Edit Product</h2>
             <form action="/admin/edit-product/{{product._id}}" method="post" enctype="multipart/form-data">
                 <label for="">Name</label>
-                <input type="text" name="name" class="form-control" value="{{product.name}}">
+                <input type="text" name="name" class="form-control" value="{{product.name}}" required>
 
                 <label for="">Category</label>
-                <input type="text" name="category" class="form-control" value="{{product.category}}">
+                <input type="text" name="category" class="form-control" value="{{product.category}}" required>
 
                 <label for="">Price</label>
-                <input type="text" name="price" class="form-control" value="{{product.price}}">
+                <input type="text" name="price" class="form-control" value="{{product.price}}" required>
 
                 <label for="">Discription</label>
                 <input type="text" name="discription" class="form-control" value="{{product.discription}}">

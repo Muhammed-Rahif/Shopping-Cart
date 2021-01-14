@@ -4,22 +4,31 @@
             <h2 class="text-center">Add Product</h2>
             <form action="/admin/add-product" method="post" enctype="multipart/form-data">
                 <label for="">Name</label>
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="name" class="form-control" required>
 
                 <label for="">Category</label>
-                <input type="text" name="category" class="form-control">
+                <input type="text" name="category" class="form-control" required>
 
                 <label for="">Price</label>
-                <input type="text" name="price" class="form-control">
+                <input type="text" name="price" class="form-control" required>
 
                 <label for="">Discription</label>
                 <input type="text" name="discription" class="form-control">
 
                 <label for="">Image</label>
-                <input type="file" name="image" class="form-control">
+                <input type="file" name="image" class="form-control" required>
 
                 <button class="btn btn-success btn-block mt-4 mb-4" type="submit">Add Product</button>
             </form>
         </div>
     </div>
 </section>
+<script>
+    function productAdded() {
+        if ('{{proAdded}}'){
+            alert('{{proAdded}}')
+        }
+    }
+
+    window.onload = productAdded();
+</script>
