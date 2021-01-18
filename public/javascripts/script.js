@@ -1,10 +1,11 @@
-function addToCart(proId,userId) {
+
+async function addToCart(proId,userId) {
     if (userId) {
         $.ajax({
             url: '/add-to-cart/' + proId,
             method: 'get',
-            success: (response) => {
-                alert("Product added to cart!")
+            success: async(response) => {
+                await swal("Product added to cart!","","success")
                 if (response.status) {
                     let count=$('#cart-count').html()
                     count=parseInt(count)+1
@@ -13,7 +14,7 @@ function addToCart(proId,userId) {
             }
         })
     } else {
-        alert("Please login first...!")
+        await swal("Please login first...!","","info")
         window.location.href = '/login';
     }
 }

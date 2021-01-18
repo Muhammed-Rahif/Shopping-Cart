@@ -15,12 +15,12 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
             if (user) {
-                resolve({response:false})
+                resolve({ response: false })
             } else {
                 userData.password = await bcrypt.hash(userData.password, 10)
                 db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((data) => {
-                    data=data.ops[0];
-                    resolve({data,response:true})
+                    data = data.ops[0];
+                    resolve({ data, response: true })
                 })
             }
         })
@@ -203,7 +203,12 @@ module.exports = {
                         }
                     }
                 ]).toArray()
-                resolve(total[0].total)
+                if (total[0]) {
+                    resolve(total[0].total)
+                } else {
+                    let total = 0
+                    resolve(total)
+                }
             } else {
                 let total = 0
                 resolve(total)
@@ -220,7 +225,7 @@ module.exports = {
                     pincode: order.pincode
                 },
                 userId: objectId(order.userId),
-                userName:order.userName,
+                userName: order.userName,
                 paymentMethod: order['payment-method'],
                 products: products,
                 totalAmount: total,
@@ -286,7 +291,7 @@ module.exports = {
     generateRazorpay: (orderId, total) => {
         return new Promise((resolve, reject) => {
             var options = {
-                amount: total*100,  // amount in the smallest currency unit
+                amount: total * 100,  // amount in the smallest currency unit
                 currency: "INR",
                 receipt: "" + orderId
             };
@@ -305,27 +310,27 @@ module.exports = {
             const crypto = require('crypto');
             let hmac = crypto.createHmac('sha256', 'oRVqJAQuObz6rQycSfQhrnnh');
 
-            hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]']);
-            hmac=hmac.digest('hex')
-            if (hmac==details['payment[razorpay_signature]']) {
+            hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]']);
+            hmac = hmac.digest('hex')
+            if (hmac == details['payment[razorpay_signature]']) {
                 resolve()
-            }else{
+            } else {
                 reject()
             }
         })
     },
-    changePaymentStatus:(orderId)=>{
-        return new Promise((resolve,reject)=>{
+    changePaymentStatus: (orderId) => {
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION)
-            .updateOne({_id:objectId(orderId)},
-            {
-                $set:{
-                    status:'placed'
-                }
-            }
-            ).then(()=>{
-                resolve()
-            })
+                .updateOne({ _id: objectId(orderId) },
+                    {
+                        $set: {
+                            status: 'placed'
+                        }
+                    }
+                ).then(() => {
+                    resolve()
+                })
         })
     }
 }

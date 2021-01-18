@@ -53,7 +53,7 @@
             },
             method:'post',
             success:(response)=>{
-                alert("Order status changed to : "+response.orderStatus)
+                swal("Order status changed to : "+response.orderStatus,"","success")
                 document.getElementById("status-"+id).innerHTML=response.orderStatus
             }
 

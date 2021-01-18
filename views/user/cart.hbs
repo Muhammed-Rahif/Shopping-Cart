@@ -64,40 +64,53 @@
         $.ajax({
             url: '/change-product-quantity',
             data: {
-                user:userId,
+                user: userId,
                 cart: cartId,
                 product: proId,
                 count: count,
                 quantity: quantity
             },
             method: 'post',
-            success: (response) => {
+            success: async (response) => {
                 if (response.removeProduct) {
-                    alert("Product removed from cart")
+                    await swal("Product removed from cart", "", "info")
                     location.reload()
                 } else {
                     document.getElementById(proId).innerHTML = quantity + count;
-                    document.getElementById('total').innerHTML=response.total;
+                    document.getElementById('total').innerHTML = response.total;
                 }
             }
         })
     }
     function deleteProduct(cartId, proId) {
-        $.ajax({
-            url: '/delete-product',
-            data: {
-                cartId: cartId,
-                proId: proId
-            },
-            method: 'post',
-            success: (response) => {
-                if (response.removeProduct) {
-                    alert("Product removed from cart")
-                    location.reload()
-                } else {
-                    alert("An server issue found,try again please...")
-                }
-            }
+        swal({
+            title: "Are you sure?",
+            text: "If you continue, the product will be removed from the cart!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/delete-product',
+                        data: {
+                            cartId: cartId,
+                            proId: proId
+                        },
+                        method: 'post',
+                        success: async (response) => {
+                            if (response.removeProduct) {
+                                await swal("Product removed from cart", "", "info")
+                                location.reload()
+                            } else {
+                                await swal("An server issue found,try again please...", "", "error")
+                            }
+                        }
+                    })
+                } else {
+                    swal("Product isn't deleted..!");
+                }
+            });
     }
 </script>

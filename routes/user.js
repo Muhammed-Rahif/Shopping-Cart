@@ -69,8 +69,7 @@ router.get('/cart', verifyLogin, async (req, res) => {
   let user = req.session.user
   let products = await userHelpers.getCartProducts(req.session.user._id)
   let totalValue = 0;
-  console.log(products.length);
-  if (products.length > 0) {
+  if (products && products.length > 0) {
     totalValue = await userHelpers.getTotalAmount(req.session.user._id)
   }
   res.render('user/cart', { user, products, totalValue })
@@ -80,10 +79,11 @@ router.get('/add-to-cart/:id', (req, res) => {
     res.json({ status: true })
   })
 })
-router.post('/change-product-quantity', (req, res, next) => {
-  userHelpers.changeProductQuantity(req.body).then(async (response) => {
-    response.total = await userHelpers.getTotalAmount(req.body.user)
-    res.json(response)
+router.post('/change-product-quantity',  (req, res, next) => {
+  userHelpers.changeProductQuantity(req.body).then(async(response) => {
+    let total = await userHelpers.getTotalAmount(req.body.user);
+      response.total = total;
+      res.json(response)
   })
 })
 router.post('/delete-product', (req, res) => {

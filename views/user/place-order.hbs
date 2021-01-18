@@ -77,9 +77,9 @@
             url: '/place-order',
             method: 'post',
             data: $('#checkout-form').serialize(),
-            success: (response) => {
+            success: async(response) => {
                 if (response.codsuccess) {
-                    alert("Order placed sussecfully")
+                    await swal("Order placed sussecfully","","success")
                     location.href = '/order-placed'
                 } else {
                     razorpayPayment(response)
@@ -127,12 +127,12 @@
                 order
             },
             method:'post',
-            success:(response)=>{
+            success:async(response)=>{
                 if(response.status){
-                    alert("Order placed sussecfully")
+                    await swal("Order placed sussecfully","","success")
                     location.href = '/order-placed'
                 }else{
-                    alert("Payment failed")
+                    await swal("Payment failed","","error")
                 }
             }
         })
