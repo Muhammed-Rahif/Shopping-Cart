@@ -1,7 +1,7 @@
 module.exports={
-    PRODUCT_COLLECTION:'product',
-    USER_COLLECTION:'user',
-    CART_COLLECTION:'cart',
-    ORDER_COLLECTION:'order',
+    PRODUCT_COLLECTION:'products',
+    USER_COLLECTION:'users',
+    CART_COLLECTION:'carts',
+    ORDER_COLLECTION:'orders',
     ADMIN_COLLECTION:'admin'
 }

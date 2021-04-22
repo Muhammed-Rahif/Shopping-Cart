@@ -2,6 +2,7 @@ var db = require('../config/connection')
 var collection = require('../config/collections')
 var objectId = require('mongodb').ObjectID
 var Promise = require('promise');
+const bcrypt = require("bcryptjs");
 const { reject, resolve } = require('promise');
 const collections = require('../config/collections');
 module.exports = {
@@ -55,31 +56,51 @@ module.exports = {
         return new Promise(async(resolve,reject)=>{
             const defAdmin={
                 name:"Muhammed Rahif",
-                email:'rahifpalliyalil@gmail.com',
-                password:'1234'
+                email:'$2a$10$Wf0jWjnt0cMlPAzF2yfvUe4Yuxsa.J9Xhp1QEtAdmzOovOLA0G.16',
+                password:'$2a$10$AkayNeMKYJcE2BHkaKaecOg/5oPrntmZ5YDOGvNrUerNp2pyPcNw2'
             }
-            let adminDataExist=await db.get().collection(collection.ADMIN_COLLECTION).findOne({})
+            var adminDataExist=await db.get().collection(collection.ADMIN_COLLECTION).findOne({});
             if (adminDataExist) {
-                if (adminData.email===adminDataExist.email) {
-                    if (adminData.password===adminDataExist.password) {
-                        resolve({loginStatus:true,admin:defAdmin})
+                    if (adminData.name===adminDataExist.name) {
+                        bcrypt.compare(adminData.email, adminDataExist.email).then((status) => {
+                            if (status) {
+                                bcrypt.compare(adminData.password, adminDataExist.password).then((status) => {
+                                    if (status) {
+                                        resolve({loginStatus:true,admin:defAdmin})
+                                    } else {
+                                        resolve({loginStatus:false})
+                                    }
+                                })
+                            } else {
+                                resolve({loginStatus:false})
+                            }
+                        })
                     } else {
                         resolve({loginStatus:false})
                     }
-                } else {
-                    resolve({loginStatus:false})
-                }
             } else {
-                db.get().collection(collection.ADMIN_COLLECTION).insertOne(defAdmin)
-                if (adminData.email===defAdmin.email) {
-                    if (adminData.password===defAdmin.password) {
-                        resolve({loginStatus:true})
-                    } else {
-                        resolve({loginStatus:false})
-                    }
-                } else {
-                    resolve({loginStatus:false})
-                }
+                db.get().collection(collection.ADMIN_COLLECTION).insertOne(defAdmin).then(async()=>{
+                    db.get().collection(collection.ADMIN_COLLECTION).findOne({}).then((adminDataExist)=>{
+                        console.log(adminDataExist);
+                            if (adminData.name===adminDataExist.name) {
+                                bcrypt.compare(adminData.email, adminDataExist.email).then((status) => {
+                                    if (status) {
+                                        bcrypt.compare(adminData.password, adminDataExist.password).then((status) => {
+                                            if (status) {
+                                                resolve({loginStatus:true,admin:defAdmin})
+                                            } else {
+                                                resolve({loginStatus:false})
+                                            }
+                                        })
+                                    } else {
+                                        resolve({loginStatus:false})
+                                    }
+                                })
+                            } else {
+                                resolve({loginStatus:false})
+                            }
+                    })
+                })
             }
         })
     },

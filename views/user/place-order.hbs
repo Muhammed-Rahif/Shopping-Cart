@@ -1,5 +1,3 @@
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -73,19 +71,28 @@
 <script>
     $("#checkout-form").submit((e) => {
         e.preventDefault()
-        $.ajax({
-            url: '/place-order',
-            method: 'post',
-            data: $('#checkout-form').serialize(),
-            success: async(response) => {
-                if (response.codsuccess) {
-                    await swal("Order placed sussecfully","","success")
-                    location.href = '/order-placed'
-                } else {
-                    razorpayPayment(response)
-                }
-            }
+        let formValid = true;
+        $('[required]').each(function () {
+            if ($(this).is(':invalid') || !$(this).val()) formValid = false;
         })
+        if (!formValid) {
+            $("input[name='address']").focus();
+        }
+        else {
+            $.ajax({
+                url: '/place-order',
+                method: 'post',
+                data: $('#checkout-form').serialize(),
+                success: async (response) => {
+                    if (response.codsuccess) {
+                        await swal("Order placed successfully", "", "success")
+                        location.href = '/order-placed'
+                    } else {
+                        razorpayPayment(response)
+                    }
+                }
+            })
+        }
     })
 
 
@@ -100,7 +107,7 @@
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
 
-                verifyPayment(response,order)
+                verifyPayment(response, order)
 
             },
             "prefill": {
@@ -119,20 +126,20 @@
         rzp1.open();
     }
 
-    function verifyPayment(payment,order){
+    function verifyPayment(payment, order) {
         $.ajax({
-            url:'/payment-verify',
-            data:{
+            url: '/payment-verify',
+            data: {
                 payment,
                 order
             },
-            method:'post',
-            success:async(response)=>{
-                if(response.status){
-                    await swal("Order placed sussecfully","","success")
+            method: 'post',
+            success: async (response) => {
+                if (response.status) {
+                    await swal("Order placed successfully", "", "success")
                     location.href = '/order-placed'
-                }else{
-                    await swal("Payment failed","","error")
+                } else {
+                    await swal("Payment failed", "", "error")
                 }
             }
         })

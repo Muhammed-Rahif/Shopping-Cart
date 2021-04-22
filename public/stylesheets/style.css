@@ -1,14 +1,13 @@
 .cards .card{
     box-shadow: 0px 0px 2px black;
-    transition: 0.4s;
+    transition: 0.4s !important;
     border: 1px rgb(48, 48, 48) solid;
 }
 .cards .card:hover{
-    box-shadow: 8px 8px 18px black;
-    transition: 0.4s;
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.5);
 }
 .down-shadow{
-    box-shadow: 0px 0px 20px black ;
+    box-shadow: 0Foredpx 4px 4px rgba(0, 0, 0, 0.5);
 }
 #nav-header{
     transition: 0.4s;
@@ -16,4 +15,7 @@
     width: 100%;
     z-index: 100;
     top: 0;
+}
+.dataTables_wrapper{
+    width: 100% !important;
 }

@@ -18,7 +18,7 @@
                 <div class="form-control mt-3">
                     <label for="">Image</label>
                     <img src="/product-images/{{product._id}}.jpg" alt="" id="imgView" style="width: 100px;height: auto;">
-                    <input type="file" name="image" class="form-control" onchange="viewImage(event)">
+                    <input accept="image/jpg,image/jpeg" type="file" name="image" class="form-control" onchange="viewImage(event)">
                 </div>
                 
                 <button class="btn btn-success btn-block mt-4 mb-4" type="submit">Update Product</button>

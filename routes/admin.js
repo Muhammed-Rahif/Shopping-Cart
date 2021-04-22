@@ -4,7 +4,7 @@ var productHelpers = require('../helpers/product-helpers')
 var fs = require('fs');
 
 const verifyLogin = (req, res, next) => {
-  if (req.session.admin) {
+  if (req.session.adminLoggedIn) {
     next()
   } else {
     res.redirect('/admin/login')
@@ -50,6 +50,8 @@ router.get('/delete-product/:id', verifyLogin, (req, res) => {
 router.get('/edit-product/:id', verifyLogin, (req, res) => {
   productHelpers.getProductDetails(req.params.id).then((product) => {
     let admin = req.session.admin;
+    console.log(product);
+    console.log(admin);
     res.render('admin/edit-product', { admin, product })
   })
 })

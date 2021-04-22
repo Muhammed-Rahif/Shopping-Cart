@@ -1,3 +1,4 @@
+<script>var genNum = 1;</script>
 <section class="container  mt-5 mb-5">
     <div class="row">
         <a class="btn btn-success ml-auto mb-3" href="/admin/add-product">Add Product</a>
@@ -17,7 +18,7 @@
             <tbody>
                 {{#each products}}
                 <tr>
-                    <th>1</th>
+                    <th><p><script>document.write(genNum);genNum++</script></p></th>
                     <td>{{this.name}}</td>
                     <td>{{this.discription}}</td>
                     <td>Rs: {{this.price}}</td>
