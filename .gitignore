@@ -1,1 +1,2 @@
-./public/product-images/
+./public/product-images/*
+./node_modules/*
